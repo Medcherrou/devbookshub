@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DevBooksHub - Free Dev Books</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Add this in the head section for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root {
+    --primary: #2563eb;
+    --secondary: #1e40af;
+    --accent: #3b82f6;
+    --dark: #1e293b;
+    --light: #f8fafc;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0.5rem 0 0;
+}
+
+#search {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2394a3b8" width="24" height="24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 1rem center;
+    background-size: 20px;
+    padding-left: 3rem;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+#book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.book {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.book .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    padding: 1.5rem;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.book:hover .overlay {
+    opacity: 1;
+}
+
+.book h3 {
+    font-size: 1.25rem;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.book p {
+    background: rgba(59, 130, 246, 0.9);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    align-self: flex-start;
+}
+
+.book a {
+    background: var(--accent);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin-top: 1rem;
+}
+
+.book a:hover {
+    transform: translateY(-2px);
+    background: var(--secondary);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    background: var(--dark);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    #book-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+</head>
+<body>
+<header>
+<h1>DevBooksHub</h1>
+<p>Free programming books via Google Drive</p>
+</header>
+
+<main>
+<section id="search">
+    <input type="text" id="searchInput" placeholder="Search for a book..." />
+</section>
+
+<section id="book-list">
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/41joy4ucmvL._SY445_SX342_.jpg');">
+    <div class="overlay">
+        <h3>Learn Python the Hard Way</h3>
+        <p>Python</p>
+        <a href="https://we.riseup.net/assets/345908/Learn_Python_The_Hard_Way_3rd_Edition_V413HAV.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/61605LQW7dL._SL1000_.jpg');">
+    <div class="overlay">
+        <h3>Java: The Complete Reference</h3>
+        <p>Java</p>
+        <a href="https://www.sietk.org/downloads/javabook.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/41w+nN8Kg0L._SY445_SX342_.jpg');">
+    <div class="overlay">
+        <h3>JavaScript: The Good Parts</h3>
+        <p>JavaScript</p>
+        <a href="https://andersonguelphjs.github.io/OReilly_JavaScript_The_Good_Parts_May_2008.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/41jEbK-jG+L.jpg');">
+    <div class="overlay">
+        <h3>Clean Code</h3>
+        <p>Software Engineering</p>
+        <a href="https://ptgmedia.pearsoncmg.com/images/9780132350884/samplepages/9780132350884.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://www.lapabooks.com/assets/images/you-dont-know-js.jpg');">
+    <div class="overlay">
+        <h3>You Don’t Know JS</h3>
+        <p>JavaScript</p>
+        <a href="https://xiaoguo.net/~books/Program/You_Dont_Know_JS_Up_and_Going.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/51+TOcUfwXL._SY445_SX342_.jpg');">
+    <div class="overlay">
+        <h3>Automate the Boring Stuff with Python</h3>
+        <p>Python</p>
+        <a href="https://edu.anarcho-copy.org/Programming%20Languages/Python/Automate%20the%20Boring%20Stuff%20with%20Python.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/71zlUV5cBDL._SL1500_.jpg');">
+    <div class="overlay">
+        <h3>Spring in Action</h3>
+        <p>Java / Spring</p>
+        <a href="https://linux.ime.usp.br/~henrick/[ebook]%20Manning%20-%20Spring%20in%20Action.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/31EDwrw2voL._SX342_SY445_.jpg');">
+    <div class="overlay">
+        <h3>HTML & CSS: Design and Build Websites</h3>
+        <p>Web Development</p>
+        <a href="https://wtf.tw/ref/duckett.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/61vS0BZ37dL._SY385_.jpg');">
+    <div class="overlay">
+        <h3>Docker Deep Dive</h3>
+        <p>DevOps</p>
+        <a href="http://103.203.175.90:81/fdScript/RootOfEBooks/E%20Book%20collection%20-%202024%20-%20D/CSE%20%20IT%20AIDS%20ML/Docker%20Deep%20Dive.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+
+    <div class="book" style="background-image: url('https://m.media-amazon.com/images/I/51JyyJN7cFL._SY445_SX342_.jpg');">
+    <div class="overlay">
+        <h3>The DevOps Handbook</h3>
+        <p>DevOps</p>
+        <a href="http://images.itrevolution.com/documents/DevOps_Handbook_Intro_Part1_Part2.pdf" target="_blank">Download</a>
+    </div>
+    </div>
+</section>
+</main>
+
+<footer>
+<p>© 2025 DevBooksHub</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
